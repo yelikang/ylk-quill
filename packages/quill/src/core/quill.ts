@@ -91,8 +91,10 @@ class Quill {
   static sources = Emitter.sources;
   static version = typeof QUILL_VERSION === 'undefined' ? 'dev' : QUILL_VERSION;
 
+  // 注册,导入的模块
   static imports: Record<string, unknown> = {
     delta: Delta,
+    // 羊皮纸
     parchment: Parchment,
     'core/module': Module,
     'core/theme': Theme,
@@ -148,6 +150,7 @@ class Quill {
         // register(Blot | Attributor, overwrite)
         this.register(`formats/${name}`, target, overwrite);
       } else {
+        // 所有对象都会转换为字符串
         Object.keys(target).forEach((key) => {
           this.register(key, target[key], overwrite);
         });
