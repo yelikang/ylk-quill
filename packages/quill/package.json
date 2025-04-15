@@ -57,7 +57,8 @@
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
-    "webpack-merge": "^5.10.0"
+    "webpack-merge": "^5.10.0",
+    "cross-env-shell":"^7.0.3"
   },
   "license": "BSD-3-Clause",
   "repository": {
@@ -79,7 +80,7 @@
     "lint": "run-s lint:*",
     "lint:eslint": "eslint .",
     "lint:tsc": "tsc --noEmit --skipLibCheck",
-    "start": "[[ -z \"$npm_package_config_ports_webpack\" ]] && webpack-dev-server || webpack-dev-server --port $npm_package_config_ports_webpack",
+    "start": "webpack-dev-server",
     "test": "run-s test:*",
     "test:unit": "vitest --config test/unit/vitest.config.ts",
     "test:fuzz": "vitest --config test/fuzz/vitest.config.ts",
