@@ -27,6 +27,7 @@ import createRegistryWithFormats from './utils/createRegistryWithFormats.js';
 
 const debug = logger('quill');
 
+// 全局注册中心
 const globalRegistry = new Parchment.Registry();
 Parchment.ParentBlot.uiClass = 'ql-ui';
 
@@ -160,10 +161,12 @@ class Quill {
       const target = args[1];
       const overwrite = !!args[2];
 
+      // 如果已经注册了，并且没有 overwrite，则警告
       if (this.imports[path] != null && !overwrite) {
         debug.warn(`Overwriting ${path} with`, target);
       }
       this.imports[path] = target;
+      // 如果目标是一个blot或者格式，则注册到全局注册中心
       if (
         (path.startsWith('blots/') || path.startsWith('formats/')) &&
         target &&
@@ -196,7 +199,6 @@ class Quill {
   options: ExpandedQuillOptions;
 
   constructor(container: HTMLElement | string, options: QuillOptions = {}) {
-    console.trace('quill constructor')
     this.options = expandConfig(container, options);
     this.container = this.options.container;
     if (this.container == null) {
@@ -209,7 +211,9 @@ class Quill {
     const html = this.container.innerHTML.trim();
     this.container.classList.add('ql-container');
     this.container.innerHTML = '';
+    // 实例WeakMap 集合<Node, Quill> 存储
     instances.set(this.container, this);
+    // 添加ql-editor元素，做为quill的根元素
     this.root = this.addContainer('ql-editor');
     this.root.classList.add('ql-blank');
     this.emitter = new Emitter();
