@@ -60,7 +60,14 @@ interface KeyboardOptions {
 class Keyboard extends Module<KeyboardOptions> {
   static DEFAULTS: KeyboardOptions;
 
+  /**
+   * 匹配事件和绑定
+   * @param evt 
+   * @param binding 
+   * @returns 
+   */
   static match(evt: KeyboardEvent, binding: BindingObject) {
+    // 辅助键判断
     if (
       (['altKey', 'ctrlKey', 'metaKey', 'shiftKey'] as const).some((key) => {
         return !!binding[key] !== evt[key] && binding[key] !== null;
@@ -68,6 +75,7 @@ class Keyboard extends Module<KeyboardOptions> {
     ) {
       return false;
     }
+    // 匹配key
     return binding.key === evt.key || binding.key === evt.which;
   }
 
@@ -215,6 +223,8 @@ class Keyboard extends Module<KeyboardOptions> {
         suffix: suffixText,
         event: evt,
       };
+
+      // 各类判定条件，决定是否阻止默认行为，执行handler
       const prevented = matches.some((binding) => {
         if (
           binding.collapsed != null &&
@@ -250,9 +260,11 @@ class Keyboard extends Module<KeyboardOptions> {
             return false;
           }
         }
+        // 前缀判断
         if (binding.prefix != null && !binding.prefix.test(curContext.prefix)) {
           return false;
         }
+        // 后缀判断
         if (binding.suffix != null && !binding.suffix.test(curContext.suffix)) {
           return false;
         }
@@ -356,9 +368,13 @@ class Keyboard extends Module<KeyboardOptions> {
 
 const defaultOptions: KeyboardOptions = {
   bindings: {
+    // 加粗
     bold: makeFormatHandler('bold'),
+    // 斜体
     italic: makeFormatHandler('italic'),
+    // 下划线
     underline: makeFormatHandler('underline'),
+    // 缩进
     indent: {
       // highlight tab or tab at beginning of list, indent or blockquote
       key: 'Tab',
