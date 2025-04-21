@@ -6,10 +6,14 @@ const debug = logger('quill:events');
 const EVENTS = ['selectionchange', 'mousedown', 'mouseup', 'click'];
 
 EVENTS.forEach((eventName) => {
+  // 事件委托给document
   document.addEventListener(eventName, (...args) => {
+    // 获取所有的ql-container元素
     Array.from(document.querySelectorAll('.ql-container')).forEach((node) => {
+      // 获取元素对应的quill实例
       const quill = instances.get(node);
       if (quill && quill.emitter) {
+        // 处理事件
         quill.emitter.handleDOM(...args);
       }
     });
@@ -55,6 +59,7 @@ class Emitter extends EventEmitter<string> {
 
   handleDOM(event: Event, ...args: unknown[]) {
     (this.domListeners[event.type] || []).forEach(({ node, handler }) => {
+      // 遍历dom元素的事件，如果与listenDOM中监听的dom相同，则执行handler
       if (event.target === node || node.contains(event.target as Node)) {
         handler(event, ...args);
       }
