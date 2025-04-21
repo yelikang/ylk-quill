@@ -37,6 +37,7 @@ import Video from './formats/video.js';
 
 import CodeBlock, { Code as InlineCode } from './formats/code.js';
 
+// 语法-句法模块？
 import Syntax from './modules/syntax.js';
 import Table from './modules/table.js';
 import Toolbar from './modules/toolbar.js';
@@ -75,6 +76,7 @@ Quill.register(
   {
     'formats/align': AlignClass,
     'formats/direction': DirectionClass,
+    // 格式化：缩进
     'formats/indent': Indent,
 
     'formats/background': BackgroundStyle,
