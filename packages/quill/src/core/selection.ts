@@ -35,6 +35,9 @@ export class Range {
   ) {}
 }
 
+/**
+ * 选择器，主要负责处理selection、Range
+ */
 class Selection {
   scroll: Scroll;
   emitter: Emitter;
@@ -59,7 +62,9 @@ class Selection {
     this.savedRange = new Range(0, 0);
     this.lastRange = this.savedRange;
     this.lastNative = null;
+    // 处理输入法编辑状态
     this.handleComposition();
+    // 处理拖拽状态
     this.handleDragging();
     this.emitter.listenDOM('selectionchange', document, () => {
       if (!this.mouseDown && !this.composing) {
