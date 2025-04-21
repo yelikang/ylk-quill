@@ -900,6 +900,7 @@ function modify(
   }
   let range = index == null ? null : this.getSelection();
   const oldDelta = this.editor.delta;
+  // 计算变更内容
   const change = modifier();
   if (range != null) {
     if (index === true) {
