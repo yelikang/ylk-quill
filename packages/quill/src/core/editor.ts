@@ -330,6 +330,7 @@ class Editor {
         change = oldDelta.diff(this.delta, selectionInfo);
       }
     }
+    // 返回变更内容
     return change;
   }
 }
