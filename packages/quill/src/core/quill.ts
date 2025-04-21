@@ -167,6 +167,7 @@ class Quill {
       }
       this.imports[path] = target;
       // 如果目标是一个blot或者格式，则注册到全局注册中心
+      // 有些注册进了globalRegistry、或者target; 有些（例如module/keyboard）只进入了this.imports
       if (
         (path.startsWith('blots/') || path.startsWith('formats/')) &&
         target &&
@@ -230,6 +231,7 @@ class Quill {
     this.editor = new Editor(this.scroll);
     this.selection = new Selection(this.scroll, this.emitter);
     this.composition = new Composition(this.scroll, this.emitter);
+    // 初始化主题
     this.theme = new this.options.theme(this, this.options); // eslint-disable-line new-cap
     this.keyboard = this.theme.addModule('keyboard');
     this.clipboard = this.theme.addModule('clipboard');
