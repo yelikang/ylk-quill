@@ -39,6 +39,7 @@ Quill.register({
   'blots/block/embed': BlockEmbed,
   'blots/break': Break,
   'blots/container': Container,
+  // 光标
   'blots/cursor': Cursor,
   'blots/embed': Embed,
   'blots/inline': Inline,
