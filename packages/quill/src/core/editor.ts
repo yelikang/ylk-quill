@@ -16,12 +16,29 @@ type SelectionInfo = {
   oldRange: Range;
 };
 
+/**
+ * 编辑器，主要负责处理delta，并更新scroll？
+ */
 class Editor {
   scroll: Scroll;
   delta: Delta;
 
   constructor(scroll: Scroll) {
     this.scroll = scroll;
+    // 记录每个blot的操作序列
+    /**
+     * ops: [
+     *  {
+     *    insert: 'hello'
+     *  },
+     *  {
+     *    insert: 'world',
+     *    attributes: {
+     *      bold: true
+     *    }
+     *  }
+     * ]
+     */
     this.delta = this.getDelta();
   }
 
