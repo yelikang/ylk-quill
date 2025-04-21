@@ -71,6 +71,9 @@ interface ClipboardOptions {
   matchers: [Selector, Matcher][];
 }
 
+/**
+ * 剪贴板，处理复制粘贴
+ */
 class Clipboard extends Module<ClipboardOptions> {
   static DEFAULTS: ClipboardOptions = {
     matchers: [],
