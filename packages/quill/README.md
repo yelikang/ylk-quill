@@ -3,7 +3,7 @@
 This is the main package of Quill.
 
 # 目录结构
-## blots > 文档结构元素?
+## blots > 文档结构元素，文档模型基础构建块
 块元素、内联元素、内嵌元素...
 
 ## core > 核心代码
