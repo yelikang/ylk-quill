@@ -274,6 +274,11 @@ class Selection {
     );
   }
 
+  /**
+   * 计算Range区域（重点）
+   * @param range 
+   * @returns 
+   */
   normalizedToRange(range: NormalizedRange) {
     const positions: [Node, number][] = [
       [range.start.node, range.start.offset],
