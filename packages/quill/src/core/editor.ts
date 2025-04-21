@@ -141,6 +141,7 @@ class Editor {
 
   deleteText(index: number, length: number): Delta {
     this.scroll.deleteAt(index, length);
+    // 删除后，更新delta
     return this.update(new Delta().retain(index).delete(length));
   }
 
