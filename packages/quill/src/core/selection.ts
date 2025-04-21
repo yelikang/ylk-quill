@@ -300,6 +300,11 @@ class Selection {
     return new Range(start, end - start);
   }
 
+  /**
+   * 标准化原生range
+   * @param nativeRange 
+   * @returns 
+   */
   normalizeNative(nativeRange: NativeRange) {
     if (
       !contains(this.root, nativeRange.startContainer) ||
@@ -315,9 +320,12 @@ class Selection {
       end: { node: nativeRange.endContainer, offset: nativeRange.endOffset },
       native: nativeRange,
     };
+    // 将选择范围标准化，确保start和end都是文本节点（还有容器节点ep:P 、内联节点ep:SPAN）
     [range.start, range.end].forEach((position) => {
       let { node, offset } = position;
+      // 如果node不是text，并且有子节点
       while (!(node instanceof Text) && node.childNodes.length > 0) {
+        // 如果offset大于子节点数量，则取下一个子节点
         if (node.childNodes.length > offset) {
           node = node.childNodes[offset];
           offset = 0;
