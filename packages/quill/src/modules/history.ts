@@ -38,6 +38,7 @@ class History extends Module<HistoryOptions> {
 
   constructor(quill: Quill, options: Partial<HistoryOptions>) {
     super(quill, options);
+    // 监听编辑器变化
     this.quill.on(
       Quill.events.EDITOR_CHANGE,
       (eventName, value, oldValue, source) => {
