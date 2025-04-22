@@ -148,6 +148,12 @@ class Keyboard extends Module<KeyboardOptions> {
     this.listen();
   }
 
+  /**
+   * 添加事件绑定
+   * @param keyBinding 
+   * @param context 
+   * @param handler 
+   */
   addBinding(
     keyBinding: Binding,
     context:
@@ -182,6 +188,7 @@ class Keyboard extends Module<KeyboardOptions> {
   }
 
   listen() {
+    // 监听根元素的keydown事件
     this.quill.root.addEventListener('keydown', (evt) => {
       if (evt.defaultPrevented || evt.isComposing) return;
 
@@ -802,6 +809,11 @@ function makeTableArrowHandler(up: boolean): BindingObject {
   };
 }
 
+/**
+ * 标准化绑定格式
+ * @param binding 
+ * @returns 
+ */
 function normalize(binding: Binding): BindingObject | null {
   if (typeof binding === 'string' || typeof binding === 'number') {
     binding = { key: binding };
@@ -810,6 +822,8 @@ function normalize(binding: Binding): BindingObject | null {
   } else {
     return null;
   }
+
+  // 如果shortKey为true，则根据不同平台，设置为 metaKey | ctrlKey
   if (binding.shortKey) {
     binding[SHORTKEY] = binding.shortKey;
     delete binding.shortKey;

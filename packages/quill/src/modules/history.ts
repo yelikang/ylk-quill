@@ -59,10 +59,12 @@ class History extends Module<HistoryOptions> {
       },
     );
 
+    // 监听 ctrl + z 撤销
     this.quill.keyboard.addBinding(
       { key: 'z', shortKey: true },
       this.undo.bind(this),
     );
+    // 监听 ctrl + y 重做
     this.quill.keyboard.addBinding(
       { key: ['z', 'Z'], shortKey: true, shiftKey: true },
       this.redo.bind(this),
