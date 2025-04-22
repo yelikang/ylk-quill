@@ -57,6 +57,9 @@ interface KeyboardOptions {
   bindings: Record<string, Binding>;
 }
 
+/**
+ * 键盘，处理键盘事件
+ */
 class Keyboard extends Module<KeyboardOptions> {
   static DEFAULTS: KeyboardOptions;
 
