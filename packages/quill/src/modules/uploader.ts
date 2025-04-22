@@ -9,6 +9,9 @@ interface UploaderOptions {
   handler: (this: { quill: Quill }, range: Range, files: File[]) => void;
 }
 
+/**
+ * 文件上传、拖拽上传
+ */
 class Uploader extends Module<UploaderOptions> {
   static DEFAULTS: UploaderOptions;
 
