@@ -329,6 +329,8 @@ class Selection {
     [range.start, range.end].forEach((position) => {
       let { node, offset } = position;
       // 如果node不是text，并且有子节点
+      // 当node不是text时，基本上就是P或者span这种内联元素，这种元素作为node就是全量选择，那就一直向下取第一个text元素，并且将offset设置为0
+      // 始终都转换为text元素
       while (!(node instanceof Text) && node.childNodes.length > 0) {
         // 如果offset大于子节点数量，则取下一个子节点
         if (node.childNodes.length > offset) {
