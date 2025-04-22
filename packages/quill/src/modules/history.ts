@@ -21,6 +21,9 @@ interface Stack {
   redo: StackItem[];
 }
 
+/**
+ * 历史记录，处理撤销和重做
+ */
 class History extends Module<HistoryOptions> {
   static DEFAULTS: HistoryOptions = {
     delay: 1000,
