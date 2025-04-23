@@ -7,6 +7,10 @@ function Render() {
     const quill = new window.Quill(editorRef.current, {
       theme: 'snow',
     });
+
+    quill.on('text-change', (delta, oldDelta, source) => {
+      console.log(delta, oldDelta, source);
+    });
   }, []);
 
   return <div ref={editorRef}></div>;
