@@ -225,6 +225,7 @@ class Quill {
         `Cannot initialize Quill without "${scrollBlotName}" blot`,
       );
     }
+    // 卷轴
     this.scroll = new ScrollBlot(this.options.registry, this.root, {
       emitter: this.emitter,
     }) as Scroll;
@@ -706,6 +707,12 @@ class Quill {
     }
   }
 
+  /**
+   * 设置内容
+   * @param delta 
+   * @param source 
+   * @returns 
+   */
   setContents(
     delta: Delta | Op[],
     source: EmitterSource = Emitter.sources.API,
@@ -941,6 +948,7 @@ function modify(
     this.setSelection(range, Emitter.sources.SILENT);
   }
   if (change.length() > 0) {
+    // 触发TEXT_CHANGE事件
     const args = [Emitter.events.TEXT_CHANGE, change, oldDelta, source];
     this.emitter.emit(Emitter.events.EDITOR_CHANGE, ...args);
     if (source !== Emitter.sources.SILENT) {
