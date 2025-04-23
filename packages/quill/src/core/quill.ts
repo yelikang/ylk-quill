@@ -781,7 +781,25 @@ function resolveSelector(selector: string | HTMLElement | null | undefined) {
     : selector;
 }
 
+/**
+ * 展开用户配置的模块配置
+ * @param config 用户配置的模块配置
+ * @returns 展开后的模块配置
+ */
 function expandModuleConfig(config: Record<string, unknown> | undefined) {
+  /**
+   * {
+   *  history: true,
+   *  toolbar: true,
+   * }
+   *
+   * 展开后
+   * {
+   *  history: {},
+   *  toolbar: {},
+   * }
+   *
+   */
   return Object.entries(config ?? {}).reduce(
     (expanded, [key, value]) => ({
       ...expanded,
@@ -791,6 +809,10 @@ function expandModuleConfig(config: Record<string, unknown> | undefined) {
   );
 }
 
+/**
+ * 移除对象中值为 undefined 的属性
+ *
+ */
 function omitUndefinedValuesFromOptions(obj: QuillOptions) {
   return Object.fromEntries(
     Object.entries(obj).filter((entry) => entry[1] !== undefined),
@@ -820,6 +842,7 @@ function expandConfig(
 
   let userModuleOptions = expandModuleConfig(options.modules);
   // Special case toolbar shorthand
+  // 处理用户配置的 toolbar 选项
   if (
     userModuleOptions != null &&
     userModuleOptions.toolbar &&
@@ -860,6 +883,7 @@ function expandConfig(
     registry,
     container,
     theme,
+    // 处理并加载modules
     modules: Object.entries(modules).reduce(
       (modulesWithDefaults, [name, value]) => {
         if (!value) return modulesWithDefaults;
@@ -872,8 +896,10 @@ function expandConfig(
           return modulesWithDefaults;
         }
         return {
+          // 合并项
           ...modulesWithDefaults,
           // @ts-expect-error
+          // 给模块添加默认配置(模块默认配置项 + 用户配置项)
           [name]: merge({}, moduleClass.DEFAULTS || {}, value),
         };
       },
