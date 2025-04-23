@@ -83,6 +83,11 @@ class Input extends Module {
   }
 }
 
+/**
+ * 获取输入事件的纯文本
+ * @param event 
+ * @returns 
+ */
 function getPlainTextFromInputEvent(event: InputEvent) {
   // When `inputType` is "insertText":
   // - `event.data` should be string (Safari uses `event.dataTransfer`).
