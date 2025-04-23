@@ -20,6 +20,9 @@ export interface ToolbarProps {
   theme?: boolean;
 }
 
+/**
+ * 工具栏，处理工具栏事件
+ */
 class Toolbar extends Module<ToolbarProps> {
   static DEFAULTS: ToolbarProps;
 
@@ -30,6 +33,7 @@ class Toolbar extends Module<ToolbarProps> {
   constructor(quill: Quill, options: Partial<ToolbarProps>) {
     super(quill, options);
     if (Array.isArray(this.options.container)) {
+      // 创建、添加菜单栏
       const container = document.createElement('div');
       container.setAttribute('role', 'toolbar');
       addControls(container, this.options.container);
@@ -71,6 +75,10 @@ class Toolbar extends Module<ToolbarProps> {
     this.handlers[format] = handler;
   }
 
+  /**
+   * 挂载事件
+   * @param input 
+   */
   attach(input: HTMLElement) {
     let format = Array.from(input.classList).find((className) => {
       return className.indexOf('ql-') === 0;
@@ -111,6 +119,7 @@ class Toolbar extends Module<ToolbarProps> {
       }
       this.quill.focus();
       const [range] = this.quill.selection.getRange();
+      // 如果handlers中存在对应的format handler，则调用handler
       if (this.handlers[format] != null) {
         this.handlers[format].call(this, value);
       } else if (
@@ -129,6 +138,7 @@ class Toolbar extends Module<ToolbarProps> {
           Quill.sources.USER,
         );
       } else {
+        // 如果handlers中不存在对应的format handler，则调用quill.format
         this.quill.format(format, value, Quill.sources.USER);
       }
       this.update(range);
@@ -198,6 +208,11 @@ function addButton(container: HTMLElement, format: string, value?: string) {
   container.appendChild(input);
 }
 
+/**
+ * 工具栏添加按钮，并且设置ql-${format}类名，在点击时根据类名取到对应的format handler进行逻辑处理（例如： ql-bold 对应 handlers.bold）
+ * @param container 
+ * @param groups 
+ */
 function addControls(
   container: HTMLElement,
   groups:

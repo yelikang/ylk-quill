@@ -97,6 +97,7 @@ class SnowTheme extends BaseTheme {
       options.modules.toolbar != null &&
       options.modules.toolbar.container == null
     ) {
+      // 设置theme 默认配置
       options.modules.toolbar.container = TOOLBAR_CONFIG;
     }
     super(quill, options);
