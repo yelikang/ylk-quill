@@ -34,6 +34,7 @@ class CodeBlock extends Block {
   static TAB = '  ';
 
   static register() {
+    // CodeBlock 在注册时，将CodeBlockContainer也进行注册；后续创建 CodeBlock 时，会自动创建 CodeBlockContainer
     Quill.register(CodeBlockContainer);
   }
 }
@@ -52,6 +53,7 @@ CodeBlockContainer.tagName = 'DIV';
 CodeBlockContainer.allowedChildren = [CodeBlock];
 
 CodeBlock.allowedChildren = [TextBlot, Break, Cursor];
+// CodeBlock 需要 CodeBlockContainer 包裹
 CodeBlock.requiredContainer = CodeBlockContainer;
 
 export { Code, CodeBlockContainer, CodeBlock as default };
