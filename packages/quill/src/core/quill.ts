@@ -864,6 +864,10 @@ function expandConfig(
     userModuleOptions.toolbar &&
     userModuleOptions.toolbar.constructor !== Object
   ) {
+    /**
+     * 用户传递的toolbar不是对象，可能是一下内容，就直接将toolbar作为container的配置
+     * [{header: ['1', '2', '3', false]}]
+     */
     userModuleOptions = {
       ...userModuleOptions,
       toolbar: { container: userModuleOptions.toolbar },
