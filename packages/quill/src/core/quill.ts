@@ -165,6 +165,7 @@ class Quill {
       if (this.imports[path] != null && !overwrite) {
         debug.warn(`Overwriting ${path} with`, target);
       }
+      // 1. 记录进this.imports
       this.imports[path] = target;
       // 如果目标是一个blot或者格式，则注册到全局注册中心
       // 有些注册进了globalRegistry、或者target; 有些（例如module/keyboard）只进入了this.imports
@@ -174,9 +175,11 @@ class Quill {
         typeof target !== 'boolean' &&
         target.blotName !== 'abstract'
       ) {
+        // 2. 注册到全局注册中心
         globalRegistry.register(target);
       }
       if (typeof target.register === 'function') {
+        // 如果target有register方法，则调用(例如code-block有register方法，需要将CodeBlockContainer也进行注册)
         target.register(globalRegistry);
       }
     }
@@ -561,6 +564,12 @@ class Quill {
 
   getText(range?: Range): string;
   getText(index?: number, length?: number): string;
+  /**
+   * 获取文本
+   * @param index 
+   * @param length 
+   * @returns 
+   */
   getText(index: Range | number = 0, length?: number): string {
     if (typeof index === 'number') {
       length = length ?? this.getLength() - index;
