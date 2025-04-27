@@ -266,6 +266,9 @@ class Selection {
     return [range, normalized];
   }
 
+  /**
+   * 判断是否已经聚焦
+   */
   hasFocus(): boolean {
     return (
       document.activeElement === this.root ||
@@ -493,9 +496,16 @@ class Selection {
   }
 }
 
+/**
+ * 子孙节点是否在父节点中
+ * @param parent 父节点
+ * @param descendant 子孙节点
+ * @returns 
+ */
 function contains(parent: Node, descendant: Node) {
   try {
     // Firefox inserts inaccessible nodes around video elements
+    // 这里访问一下parendNode，处理firefox特殊情况，在包含视频元素时；会像其周围插入特殊的不可访问节点
     descendant.parentNode; // eslint-disable-line @typescript-eslint/no-unused-expressions
   } catch (e) {
     return false;
