@@ -355,6 +355,13 @@ class Quill {
     }
   }
 
+  /**
+   * 格式化
+   * @param name 
+   * @param value 
+   * @param source 
+   * @returns 
+   */
   format(
     name: string,
     value: unknown,
@@ -363,6 +370,7 @@ class Quill {
     return modify.call(
       this,
       () => {
+        // 获取框选区域
         const range = this.getSelection(true);
         let change = new Delta();
         if (range == null) return change;
