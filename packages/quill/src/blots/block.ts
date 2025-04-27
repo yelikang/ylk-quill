@@ -83,7 +83,9 @@ class Block extends BlockBlot {
   }
 
   length() {
+    // 缓存length，避免每次调用length()都重新计算
     if (this.cache.length == null) {
+      // 计算length
       this.cache.length = super.length() + NEWLINE_LENGTH;
     }
     return this.cache.length;
