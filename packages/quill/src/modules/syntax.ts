@@ -205,6 +205,7 @@ class Syntax extends Module<SyntaxOptions> {
   static DEFAULTS: SyntaxOptions & { hljs: any };
 
   static register() {
+    // 注册Syntax模块时，会使用这里的SyntaxCodeBlock、SyntaxCodeBlockContainer替换掉原有的（继承自CodeBlock，blotName相同，重复注册，会覆盖）
     Quill.register(CodeToken, true);
     Quill.register(SyntaxCodeBlock, true);
     Quill.register(SyntaxCodeBlockContainer, true);
