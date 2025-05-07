@@ -287,6 +287,7 @@ class Selection {
       [range.start.node, range.start.offset],
     ];
     if (!range.native.collapsed) {
+      // 如果选区不是collapsed(没有折叠,框选区域)，则将选区结束位置添加到positions中
       positions.push([range.end.node, range.end.offset]);
     }
     const indexes = positions.map((position) => {
@@ -314,6 +315,7 @@ class Selection {
    * @returns 
    */
   normalizeNative(nativeRange: NativeRange) {
+    // 检查边界，选区是否在编辑器范围内
     if (
       !contains(this.root, nativeRange.startContainer) ||
       (!nativeRange.collapsed && !contains(this.root, nativeRange.endContainer))
@@ -328,18 +330,19 @@ class Selection {
       end: { node: nativeRange.endContainer, offset: nativeRange.endOffset },
       native: nativeRange,
     };
-    // 将选择范围标准化，确保start和end都是文本节点（还有容器节点ep:P 、内联节点ep:SPAN）
+    // 将选区位置转换为最底层的文本节点
     [range.start, range.end].forEach((position) => {
       let { node, offset } = position;
       // 如果node不是text，并且有子节点
       // 当node不是text时，基本上就是P或者span这种内联元素，这种元素作为node就是全量选择，那就一直向下取第一个text元素，并且将offset设置为0
-      // 始终都转换为text元素
+      // 始终都转换为最后的一个叶子节点
       while (!(node instanceof Text) && node.childNodes.length > 0) {
-        // 如果offset大于子节点数量，则取下一个子节点
         if (node.childNodes.length > offset) {
+          // 1. offset小于节点数，选择offst位置的子节点
           node = node.childNodes[offset];
           offset = 0;
         } else if (node.childNodes.length === offset) {
+          // 2. offset等于节点数，取最后一个子节点
           // @ts-expect-error Fix me later
           node = node.lastChild;
           if (node instanceof Text) {
@@ -352,6 +355,7 @@ class Selection {
             offset = node.childNodes.length + 1;
           }
         } else {
+          // 3. offset大于节点数，保持原样
           break;
         }
       }
