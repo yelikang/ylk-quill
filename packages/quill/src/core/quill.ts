@@ -372,6 +372,7 @@ class Quill {
       () => {
         // 获取框选区域
         const range = this.getSelection(true);
+        // 构建新的数据模型
         let change = new Delta();
         if (range == null) return change;
         if (this.scroll.query(name, Parchment.Scope.BLOCK)) {
@@ -382,6 +383,7 @@ class Quill {
           this.selection.format(name, value);
           return change;
         } else {
+          // 格式化选区内容，返回变化的数据模型（这里面会进行实际的格式化操作；例如: text blod操作）
           change = this.editor.formatText(range.index, range.length, {
             [name]: value,
           });
@@ -969,7 +971,7 @@ function modify(
     this.setSelection(range, Emitter.sources.SILENT);
   }
   if (change.length() > 0) {
-    // 触发TEXT_CHANGE事件
+    // 触发TEXT_CHANGE事件，通知变化(例如：history插件需要监听前后变化)
     const args = [Emitter.events.TEXT_CHANGE, change, oldDelta, source];
     this.emitter.emit(Emitter.events.EDITOR_CHANGE, ...args);
     if (source !== Emitter.sources.SILENT) {
