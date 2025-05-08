@@ -10,7 +10,7 @@ parchment单词的原意是“羊皮纸”，他是Quill的文档模型，抽象
 
 ```mermaid
 graph TD
-   A[Delta：数据层,负责数据描述]
+   A[Delta：数据模型层,负责数据描述]
    B[Parchment/blots：控制层，负责操控dom，将数据变化转换为dom,delta 到 domnode]
    C[Formats：格式层]
    D[Modules：模块化层，负责解耦各项功能，管控各个模块]
