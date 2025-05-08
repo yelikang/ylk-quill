@@ -294,18 +294,24 @@ class Selection {
       const [node, offset] = position;
       const blot = this.scroll.find(node, true);
       // @ts-expect-error Fix me later
+      // 当前blot相对于scroll的偏移量(字符偏移个数，不是元素偏移个数)
       const index = blot.offset(this.scroll);
       if (offset === 0) {
+        // 元素内没有偏移，直接返回scroll的偏移
         return index;
       }
       if (blot instanceof LeafBlot) {
+        // 在scroll的偏移量 + 当前光标在当前node中的偏移量 = 起始位置
         return index + blot.index(node, offset);
       }
       // @ts-expect-error Fix me later
       return index + blot.length();
     });
+    // 结束位置(最小值)
     const end = Math.min(Math.max(...indexes), this.scroll.length() - 1);
+    // 开始位置(最小值)
     const start = Math.min(end, ...indexes);
+    // 返回start、length
     return new Range(start, end - start);
   }
 
